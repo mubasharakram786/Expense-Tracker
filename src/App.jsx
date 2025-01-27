@@ -6,6 +6,7 @@ import Trips from './pages/Trips.jsx'
 import Approvals from './pages/Approvals.jsx'
 import Settings from './pages/Settings.jsx'
 import Support from './pages/Support.jsx'
+import NewExpense from './pages/NewExpense.jsx'
 function App() {
   const router = createBrowserRouter([
     {
@@ -13,6 +14,7 @@ function App() {
       element: <AppLayout />, // AppLayout is the parent route layout
       children: [
         { path: "/", element: <Home /> },
+        { path: "/new-expense", element: <NewExpense /> },
         { path: "/expenses", element: <Expenses /> },
         { path: "/trips", element: <Trips /> },
         { path: "/approvals", element: <Approvals /> },
