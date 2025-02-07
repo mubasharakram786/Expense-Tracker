@@ -24,7 +24,7 @@ const Home = () => {
       id:4,
       name:'Create trip',
       img:TripIcon,
-      to:'create-trip'
+      to:'new-trip'
     },
   ]
   return (

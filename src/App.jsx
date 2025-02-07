@@ -7,6 +7,7 @@ import Approvals from './pages/Approvals.jsx'
 import Settings from './pages/Settings.jsx'
 import Support from './pages/Support.jsx'
 import NewExpense from './pages/NewExpense.jsx'
+import NewTrip from './pages/NewTrip.jsx'
 function App() {
   const router = createBrowserRouter([
     {
@@ -15,6 +16,7 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/new-expense", element: <NewExpense /> },
+        {path:"/new-trip" , element:<NewTrip/>},
         { path: "/expenses", element: <Expenses /> },
         { path: "/trips", element: <Trips /> },
         { path: "/approvals", element: <Approvals /> },
