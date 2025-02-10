@@ -1,14 +1,61 @@
+import { useState,useEffect } from "react";
+import { addExpense, updateExpense } from "../features/expenseSlice";
+import {useSelector,useDispatch} from 'react-redux'
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useParams} from "react-router-dom";
+import axios from 'axios'
 import { Cross } from "../svgs";
-const NewExpense = () => {
-    const {register,handleSubmit,formState:{errors}} = useForm();
-    const navigate = useNavigate();
-    const submitHandler = (data) =>{
-        console.log(data)
-    }
 
+const NewExpense = () => {
+    const {register,handleSubmit,formState:{errors},setValue} = useForm();
+    const navigate = useNavigate();
+    const {expenses} = useSelector(state=> state.expense)
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(null)
+    const {id} = useParams()
+    const dispatch = useDispatch()
+    const submitHandler = (data) =>{
+
+        setLoading(true)
+        if(id){
+            axios.put(`http://localhost:8000/expenses/${id}`,data).then(res=>{
+                dispatch(updateExpense(res.data))
+                setLoading(false)
+                navigate('/expenses')
+            }).catch(error=>{
+                setError(error)
+                setLoading(false)
+            })
+        }else{
+            axios.post("http://localhost:8000/expenses",data).then(res=>{
+                dispatch(addExpense(res.data))
+                setLoading(false)
+                navigate('/expenses')
+            }).catch(error=>{
+                setError(error)
+                setLoading(false)
+            })
+
+        }
+    }
+    
+    useEffect(()=>{
+        if(id){
+          axios.get(`http://localhost:8000/expenses/${id}`).then(res=>{
+            setValue("subject",res.data.subject)
+            setValue("merchant",res.data.merchant)
+            setValue("date",res.data.date)
+            setValue("total",res.data.total)
+            setValue("currency",res.data.currency)
+            setValue("reimburseable",res.data.reimburseable)
+            setValue("category",res.data.category)
+            setValue("description",res.data.description)
+            setValue("employee",res.data.employee)
+            setValue("addToReport",res.data.addToReport)
+          }).catch(error=>console.log(error))
+        }
+      },[id])
+    console.log(expenses)
   return (
     <div className="py-5 px-10">
         <div className="flex place-content-between border-b border-solid border-white">
@@ -126,19 +173,19 @@ const NewExpense = () => {
                 </div>
             </div>
             <div className="flex gap-10">
-                <label htmlFor="" className="w-35">Add to report</label>
+                <label htmlFor="" className="text-white text-lg font-bold w-35">Add to report</label>
                 <div className="flex items-center gap-5">
-                <input {...register("yes")}  value={'yes'} type="radio" name="report" className="w-5 h-5 bg-383838" id="yes" />
+                <input {...register("addToReport")}  value={'yes'} type="radio" name="report" className="w-5 h-5 bg-383838" id="yes" />
                 <label htmlFor="yes" className="text-white font-medium text-lg">Yes</label>
                 </div>
                 <div className="flex items-center gap-5">
-                <input  {...register("no")} value={'no'}  type="radio"  name="report" className="w-5 h-5 bg-383838" id="no" />
+                <input  {...register("addToReport")} value={'no'}  type="radio"  name="report" className="w-5 h-5 bg-383838" id="no" />
                 <label htmlFor="no" className="text-white font-medium text-lg">No</label>
                 </div>
             </div>
             <div className="flex justify-end gap-3">
-                <button className="text-white bg-gray-500 py-2 px-5 rounded-sm">Save draft</button>
-                <button className="text-white bg-green-500 py-2 px-5 rounded-sm" >Save </button>
+                <button className="text-white bg-gray-500 py-2 px-5 rounded-sm cursor-pointer">Save draft</button>
+                <button className="text-white bg-green-500 py-2 px-5 rounded-sm cursor-pointer" >Save </button>
             </div>
         </form>
     </div>

@@ -16,6 +16,7 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/new-expense", element: <NewExpense /> },
+        { path: "/new-expense/:id", element: <NewExpense /> },
         {path:"/new-trip" , element:<NewTrip/>},
         { path: "/expenses", element: <Expenses /> },
         { path: "/trips", element: <Trips /> },

@@ -1,0 +1,19 @@
+{
+  "expenses": [
+    {
+      "id": "bd22",
+      "subject": "Expense 4",
+      "merchant": "Afzal Akram",
+      "date": "2025-02-22",
+      "total": "15000",
+      "currency": "gbp",
+      "reimburseable": true,
+      "category": "catering",
+      "description": "New Expense 4",
+      "employee": "Muhammad Akram",
+      "yes": null,
+      "no": null,
+      "addToReport": "yes"
+    }
+  ]
+}
